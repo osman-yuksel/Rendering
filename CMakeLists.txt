@@ -1,47 +1,32 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.23)
 project(Rendering VERSION 1.0.0 LANGUAGES CXX)
 
-# Set C++ standard
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+# set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 add_compile_definitions(
   # Exclude unnecessary APIs.
   WIN32_LEAN_AND_MEAN
-
   # Use Unicode charset.
   UNICODE
   _UNICODE
 )
 
 add_compile_options(
-  # Enable correct reporting of C++ version, see https://docs.microsoft.com/en-us/cpp/build/reference/zc-cplusplus.
-  $<$<BOOL:MSVC>:/Zc:__cplusplus>
-
-  # Mark all dependencies headers as external.
   $<$<BOOL:MSVC>:/external:I${PROJECT_SOURCE_DIR}/deps>
+  $<$<BOOL:MSVC>:/external:W0>
 )
 
-# Add GLFW
-add_subdirectory(deps/glfw)
-
-# Find OpenGL package
-find_package(OpenGL REQUIRED)
-
-# Add your project's source files
 add_executable(${PROJECT_NAME} 
-    src/main.cpp
+  src/main.cpp
+  deps/glad/src/glad.c
 )
 
-# Include directories
-target_include_directories(${PROJECT_NAME} PRIVATE
-  ${CMAKE_CURRENT_SOURCE_DIR}/deps/glfw/include
-)
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
 
-# Link libraries
-target_link_libraries(${PROJECT_NAME} PRIVATE
-  glfw
-  OpenGL::GL
-)
+include(IncludeGLFW)
+include(IncludeGLAD)
