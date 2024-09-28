@@ -24,9 +24,20 @@ if(MSVC)
   )
 endif()
 
+if(UNIX)
+  add_custom_target(run
+    COMMAND ${PROJECT_NAME}
+    DEPENDS ${PROJECT_NAME}
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    COMMENT "Running the application..."
+  )
+endif()
+
+file(GLOB SRC_FILES CONFIGURE_DEPENDS "${CMAKE_SOURCE_DIR}/src/*.cpp" "${CMAKE_SOURCE_DIR}/src/*.h" "${CMAKE_SOURCE_DIR}/src/*.hpp")
+
 add_executable(${PROJECT_NAME} 
-  src/main.cpp
-  deps/glad/src/glad.c
+  ${SRC_FILES}
+  ${CMAKE_SOURCE_DIR}/deps/glad/src/glad.c
 )
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
