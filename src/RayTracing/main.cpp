@@ -1,10 +1,10 @@
+#include <iostream>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include <stdio.h>
-#include <iostream>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 
 const char *vertexShaderSource = R"(
     #version 330 core
@@ -152,40 +152,45 @@ int main()
 
     while (!glfwWindowShouldClose(window))
     {
+        int display_w, display_h;
+        glfwGetFramebufferSize(window, &display_w, &display_h);
+        glViewport(0, 0, display_w, display_h);
+
+        // Clear buffer
         glClear(GL_COLOR_BUFFER_BIT);
 
+        // Use shader program and set uniform
         glUseProgram(shaderProgram);
 
         float timeValue = glfwGetTime();
         float rotation = timeValue * 2.0f;
         glUniform1f(rotationLoc, rotation);
 
+        // Bind VAO and draw triangle
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
-        // Poll for and process events
+        // Poll for events
         glfwPollEvents();
+
+        // Handle minimized window
         if (glfwGetWindowAttrib(window, GLFW_ICONIFIED) != 0)
         {
             ImGui_ImplGlfw_Sleep(10);
             continue;
         }
+
+        // ImGui rendering
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-
         if (show_demo_window)
             ImGui::ShowDemoWindow(&show_demo_window);
 
         ImGui::Render();
-        int display_w, display_h;
-        glfwGetFramebufferSize(window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
-        glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-        glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-        // Swap front and back buffers
+        // Swap buffers
         glfwSwapBuffers(window);
     }
 
