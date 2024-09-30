@@ -1,5 +1,6 @@
+file(GLOB SRC_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*.h" "${CMAKE_CURRENT_SOURCE_DIR}/*.hpp")
 add_executable(RayTracing
-  ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
+  ${SRC_FILES}
   ${CMAKE_SOURCE_DIR}/deps/glad/src/glad.c
 )
 
