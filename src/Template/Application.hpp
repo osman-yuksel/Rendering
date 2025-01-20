@@ -1,15 +1,17 @@
 #pragma once
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <stdio.h>
+
+#include <iostream>
+
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include <stdio.h>
-#include <iostream>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <iostream>
 
 namespace Template {
+
 class Application {
    public:
     Application();
@@ -35,4 +37,4 @@ class Application {
     GLuint createShader(GLenum type, const char *source);
 };
 
-}  // namespace RayTracing
+}  // namespace Template

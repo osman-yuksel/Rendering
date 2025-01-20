@@ -6,12 +6,14 @@ static void errorCallback(int error, const char *description) {
     std::cerr << "GLFW Error " << error << ": " << description << std::endl;
 }
 
-static void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
+static void keyCallback(GLFWwindow *window, int key, int scancode, int action,
+                        int mods) {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
-static void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
+static void framebuffer_size_callback(GLFWwindow *window, int width,
+                                      int height) {
     glViewport(0, 0, width, height);
 }
 
@@ -31,9 +33,7 @@ static const char *fragmentShaderSource =
     "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
     "}\n\0";
 
-Application::Application() {
-    clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
-}
+Application::Application() { clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f); }
 
 Application::~Application() {
     glDeleteVertexArrays(1, &VAO);
@@ -91,12 +91,13 @@ void Application::initialize() {
     ImGui_ImplOpenGL3_Init(glsl_version);
 
     GLuint vertexShader = createShader(GL_VERTEX_SHADER, vertexShaderSource);
-    GLuint fragmentShader = createShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
+    GLuint fragmentShader =
+        createShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
     float vertices[] = {
-        0.5f, 0.5f, 0.0f,    // top right
-        0.5f, -0.5f, 0.0f,   // bottom right
+        0.5f,  0.5f,  0.0f,  // top right
+        0.5f,  -0.5f, 0.0f,  // bottom right
         -0.5f, -0.5f, 0.0f,  // bottom left
-        -0.5f, 0.5f, 0.0f    // top left
+        -0.5f, 0.5f,  0.0f   // top left
     };
 
     unsigned int indices[] = {
@@ -128,9 +129,11 @@ void Application::initialize() {
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices,
+                 GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
+                          (void *)0);
     glEnableVertexAttribArray(0);
 
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -161,15 +164,15 @@ void Application::run() {
     }
 }
 
-void Application::update() {
-}
+void Application::update() {}
 
 void Application::render() {
     int display_w, display_h;
     glfwGetFramebufferSize(window, &display_w, &display_h);
     glViewport(0, 0, display_w, display_h);
 
-    glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+    glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w,
+                 clear_color.z * clear_color.w, clear_color.w);
     glClear(GL_COLOR_BUFFER_BIT);
 
     // Render the triangle
@@ -197,4 +200,4 @@ void Application::render() {
         ImGui_ImplGlfw_Sleep(10);
     }
 }
-}  // namespace RayTracing
+}  // namespace Template
