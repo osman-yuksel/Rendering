@@ -1,1 +1,1 @@
-add_subdirectory(RayTracing)
+add_subdirectory(Template)

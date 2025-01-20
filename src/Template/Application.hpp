@@ -9,7 +9,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-namespace RayTracing {
+namespace Template {
 class Application {
    public:
     Application();
@@ -28,12 +28,11 @@ class Application {
 
     // Add new member variables
     GLuint shaderProgram;
-    GLuint VAO, VBO;
+    GLuint VAO, VBO, EBO;
     GLint rotationLoc;
 
     // Add new member functions
     GLuint createShader(GLenum type, const char *source);
-    void setupTriangle();
 };
 
 }  // namespace RayTracing

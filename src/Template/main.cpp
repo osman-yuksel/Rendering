@@ -1,7 +1,7 @@
 #include "Application.hpp"
 
 int main() {
-    RayTracing::Application app;
+    Template::Application app;
     app.run();
     return 0;
 }
